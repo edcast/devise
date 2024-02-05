@@ -222,5 +222,11 @@ MESSAGE
     params.fetch(resource_name, {})
   end
 
-  ActiveSupport.run_load_hooks(:devise_controller, self)
+  def get_mailer_host
+    if Devise.email_host == :request
+      host = request.host
+    else
+      host = ActionMailer::Base.default_url_options[:host]
+    end
+  end
 end
