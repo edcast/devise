@@ -47,11 +47,15 @@ module Devise
 
       # Resets reset password token and send reset password instructions by email.
       # Returns the token sent in the e-mail.
-      def send_reset_password_instructions
-        token = set_reset_password_token
-        send_reset_password_instructions_notification(token)
+      def send_reset_password_instructions(opts={})
+        raw, enc = Devise.token_generator.generate(self.class, :reset_password_token)
 
-        token
+        self.reset_password_token   = enc
+        self.reset_password_sent_at = Time.now.utc
+        self.save(validate: false)
+
+        send_devise_notification(:reset_password_instructions, raw, opts)
+        raw
       end
 
       # Checks if the reset password token sent is within the limit time.
@@ -131,9 +135,9 @@ module Devise
         # password instructions to it. If user is not found, returns a new user
         # with an email not found error.
         # Attributes must contain the user's email
-        def send_reset_password_instructions(attributes={})
+        def send_reset_password_instructions(attributes={}, opts={})
           recoverable = find_or_initialize_with_errors(reset_password_keys, attributes, :not_found)
-          recoverable.send_reset_password_instructions if recoverable.persisted?
+          recoverable.send_reset_password_instructions(opts) if recoverable.persisted?
           recoverable
         end
 
