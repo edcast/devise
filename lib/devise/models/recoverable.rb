@@ -47,15 +47,11 @@ module Devise
 
       # Resets reset password token and send reset password instructions by email.
       # Returns the token sent in the e-mail.
-      def send_reset_password_instructions(opts={})
-        raw, enc = Devise.token_generator.generate(self.class, :reset_password_token)
+      def send_reset_password_instructions
+        token = set_reset_password_token
+        send_reset_password_instruction_notification(token)
 
-        self.reset_password_token   = enc
-        self.reset_password_sent_at = Time.now.utc
-        self.save(validate: false)
-
-        send_devise_notification(:reset_password_instructions, raw, opts)
-        raw
+        token
       end
 
       # Checks if the reset password token sent is within the limit time.
@@ -103,24 +99,18 @@ module Devise
           send_devise_notification(:reset_password_instructions, token, {})
         end
 
-        if Devise.activerecord51?
-          def clear_reset_password_token?
-            encrypted_password_changed = respond_to?(:will_save_change_to_encrypted_password?) && will_save_change_to_encrypted_password?
-            authentication_keys_changed = self.class.authentication_keys.any? do |attribute|
-              respond_to?("will_save_change_to_#{attribute}?") && send("will_save_change_to_#{attribute}?")
-            end
+        def set_reset_password_token
+          raw, enc = Devise.token_generator.generate(self.class, :reset_password_token)
 
-            authentication_keys_changed || encrypted_password_changed
-          end
-        else
-          def clear_reset_password_token?
-            encrypted_password_changed = respond_to?(:encrypted_password_changed?) && encrypted_password_changed?
-            authentication_keys_changed = self.class.authentication_keys.any? do |attribute|
-              respond_to?("#{attribute}_changed?") && send("#{attribute}_changed?")
-            end
+          self.reset_password_token   = enc
+          self.save(validate: false)
+          raw
+        end
 
-            authentication_keys_changed || encrypted_password_changed
-          end
+        def send_reset_password_instruction_notification(token)
+          self.reset_password_sent_at = Time.now.utc
+          self.save(validate: false)
+          send_devise_notification(:reset_password_instructions, token, {})
         end
 
       module ClassMethods
