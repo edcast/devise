@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class ApplicationWithFakeEngine < ApplicationController
-  private
-
   helper_method :fake_engine
   def fake_engine
     @fake_engine ||= FakeEngine.new

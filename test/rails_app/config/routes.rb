@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  mount RailsEngine::Engine => '/rails_engine', as: 'rails_engine'
-
   # Resources for testing
   resources :users, only: [:index] do
     member do
@@ -30,11 +28,6 @@ Rails.application.routes.draw do
   devise_for :user_on_engines,
     class_name: 'UserOnEngine',
     router_name: :fake_engine,
-    module: :devise
-
-  devise_for :user_without_email,
-    class_name: 'UserWithoutEmail',
-    router_name: :main_app,
     module: :devise
 
   as :user do
