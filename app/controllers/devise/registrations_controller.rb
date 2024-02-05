@@ -15,8 +15,8 @@ class Devise::RegistrationsController < DeviseController
   # POST /resource
   def create
     build_resource(sign_up_params)
-    resource.email_host = request.host_with_port
-    resource_saved = resource.save
+
+    resource.save
     yield resource if block_given?
     if resource.persisted?
       if resource.active_for_authentication?
