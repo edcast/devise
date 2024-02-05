@@ -1,8 +1,9 @@
-### 4.1.1 - 2016-05-15
+### 4.0.3 - 2016-05-15
 
 * bug fixes
   * Fix overwriting the remember_token when a valid one already exists (by @ralinchimev).
 
+<<<<<<< HEAD
 ### 4.1.0
 
 * bug fixes
@@ -50,6 +51,8 @@
   * Fix strategy checking in `Lockable#unlock_strategy_enabled?` for `:none`
     and `:undefined` strategies. (by @f3ndot)
 
+=======
+>>>>>>> df3085dc (rebase conflict resolved)
 ### 4.0.2 - 2016-04-25
 
 * bug fixes
