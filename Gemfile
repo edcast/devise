@@ -4,10 +4,9 @@ source "https://rubygems.org"
 
 gemspec
 
-gem "rails", "~> 5.2"
-gem "omniauth", "~> 1.3"
-gem "oauth2"
-gem "omniauth-oauth2"
+gem "rails", "~> 4.1.0"
+gem "omniauth", "~> 1.2.0"
+gem "omniauth-oauth2", "~> 1.1.0"
 gem "rdoc"
 
 gem "activemodel-serializers-xml", github: "rails/activemodel-serializers-xml"
