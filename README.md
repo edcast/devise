@@ -16,6 +16,7 @@ Devise is a flexible authentication solution for Rails based on Warden. It:
 
 It's composed of 10 modules:
 
+<<<<<<< HEAD
 * [Database Authenticatable](http://www.rubydoc.info/github/plataformatec/devise/master/Devise/Models/DatabaseAuthenticatable): hashes and stores a password in the database to validate the authenticity of a user while signing in. The authentication can be done both through POST requests or HTTP Basic Authentication.
 * [Omniauthable](http://www.rubydoc.info/github/plataformatec/devise/master/Devise/Models/Omniauthable): adds OmniAuth (https://github.com/omniauth/omniauth) support.
 * [Confirmable](http://www.rubydoc.info/github/plataformatec/devise/master/Devise/Models/Confirmable): sends emails with confirmation instructions and verifies whether an account is already confirmed during sign in.
@@ -26,21 +27,35 @@ It's composed of 10 modules:
 * [Timeoutable](http://www.rubydoc.info/github/plataformatec/devise/master/Devise/Models/Timeoutable): expires sessions that have not been active in a specified period of time.
 * [Validatable](http://www.rubydoc.info/github/plataformatec/devise/master/Devise/Models/Validatable): provides validations of email and password. It's optional and can be customized, so you're able to define your own validations.
 * [Lockable](http://www.rubydoc.info/github/plataformatec/devise/master/Devise/Models/Lockable): locks an account after a specified number of failed sign-in attempts. Can unlock via email or after a specified time period.
+=======
+* [Database Authenticatable](http://rubydoc.info/github/plataformatec/devise/master/Devise/Models/DatabaseAuthenticatable): encrypts and stores a password in the database to validate the authenticity of a user while signing in. The authentication can be done both through POST requests or HTTP Basic Authentication.
+* [Omniauthable](http://rubydoc.info/github/plataformatec/devise/master/Devise/Models/Omniauthable): adds OmniAuth (https://github.com/intridea/omniauth) support.
+* [Confirmable](http://rubydoc.info/github/plataformatec/devise/master/Devise/Models/Confirmable): sends emails with confirmation instructions and verifies whether an account is already confirmed during sign in.
+* [Recoverable](http://rubydoc.info/github/plataformatec/devise/master/Devise/Models/Recoverable): resets the user password and sends reset instructions.
+* [Registerable](http://rubydoc.info/github/plataformatec/devise/master/Devise/Models/Registerable): handles signing up users through a registration process, also allowing them to edit and destroy their account.
+* [Rememberable](http://rubydoc.info/github/plataformatec/devise/master/Devise/Models/Rememberable): manages generating and clearing a token for remembering the user from a saved cookie.
+* [Trackable](http://rubydoc.info/github/plataformatec/devise/master/Devise/Models/Trackable): tracks sign in count, timestamps and IP address.
+* [Timeoutable](http://rubydoc.info/github/plataformatec/devise/master/Devise/Models/Timeoutable): expires sessions that have not been active in a specified period of time.
+* [Validatable](http://rubydoc.info/github/plataformatec/devise/master/Devise/Models/Validatable): provides validations of email and password. It's optional and can be customized, so you're able to define your own validations.
+* [Lockable](http://rubydoc.info/github/plataformatec/devise/master/Devise/Models/Lockable): locks an account after a specified number of failed sign-in attempts. Can unlock via email or after a specified time period.
+>>>>>>> afaaf9a9 (rebase conflict resolved)
 
 ## Table of Contents
 
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 orderedList:0 -->
 
+- [Table of Contents](#table-of-contents)
 - [Information](#information)
-	- [The Devise wiki](#the-devise-wiki)
-	- [Bug reports](#bug-reports)
-	- [StackOverflow and Mailing List](#stackoverflow-and-mailing-list)
-	- [RDocs](#rdocs)
-	- [Example applications](#example-applications)
-	- [Extensions](#extensions)
-	- [Contributing](#contributing)
+  - [The Devise wiki](#the-devise-wiki)
+  - [Bug reports](#bug-reports)
+  - [StackOverflow and Mailing List](#stackoverflow-and-mailing-list)
+  - [RDocs](#rdocs)
+  - [Example applications](#example-applications)
+  - [Extensions](#extensions)
+  - [Contributing](#contributing)
 - [Starting with Rails?](#starting-with-rails)
 - [Getting started](#getting-started)
+<<<<<<< HEAD
 	- [Controller filters and helpers](#controller-filters-and-helpers)
 	- [Configuring Models](#configuring-models)
 	- [Strong Parameters](#strong-parameters)
@@ -56,10 +71,27 @@ It's composed of 10 modules:
 	- [ActiveJob Integration](#activejob-integration)
 	- [Password reset tokens and Rails logs](#password-reset-tokens-and-rails-logs)
 	- [Other ORMs](#other-orms)
+=======
+  - [Controller filters and helpers](#controller-filters-and-helpers)
+  - [Configuring Models](#configuring-models)
+  - [Strong Parameters](#strong-parameters)
+  - [Configuring views](#configuring-views)
+  - [Configuring controllers](#configuring-controllers)
+  - [Configuring routes](#configuring-routes)
+  - [I18n](#i18n)
+  - [Test helpers](#test-helpers)
+  - [Controller tests](#controller-tests)
+  - [Integration tests](#integration-tests)
+  - [OmniAuth](#omniauth)
+  - [Configuring multiple models](#configuring-multiple-models)
+  - [ActiveJob Integration](#activejob-integration)
+  - [Password reset tokens and Rails logs](#password-reset-tokens-and-rails-logs)
+  - [Other ORMs](#other-orms)
+>>>>>>> afaaf9a9 (rebase conflict resolved)
 - [Additional information](#additional-information)
-	- [Heroku](#heroku)
-	- [Warden](#warden)
-	- [Contributors](#contributors)
+  - [Heroku](#heroku)
+  - [Warden](#warden)
+  - [Contributors](#contributors)
 - [License](#license)
 
 <!-- /TOC -->
@@ -617,13 +649,9 @@ Unlike controller tests, integration tests do not need to supply the
 `devise.mapping` `env` value, as the mapping can be inferred by the routes that
 are executed in your tests.
 
-You can read more about testing your Rails 3 - Rails 4 controllers with RSpec in the wiki:
-
-* https://github.com/plataformatec/devise/wiki/How-To:-Test-controllers-with-Rails-3-and-4-%28and-RSpec%29
-
 ### OmniAuth
 
-Devise comes with OmniAuth support out of the box to authenticate with other providers. To use it, simply specify your OmniAuth configuration in `config/initializers/devise.rb`:
+Devise comes with OmniAuth support out of the box to authenticate with other providers. To use it, just specify your OmniAuth configuration in `config/initializers/devise.rb`:
 
 ```ruby
 config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
