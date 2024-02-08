@@ -40,10 +40,9 @@ class SessionsControllerTest < Devise::ControllerTestCase
 
     user = create_user
     user.confirm
-    post :create, params: { user: {
-        email: user.email,
-        password: user.password
-      }
+    post :create, user: {
+      email: user.email,
+      password: user.password
     }
     assert_nil request.session["user_return_to"]
   end
@@ -54,10 +53,9 @@ class SessionsControllerTest < Devise::ControllerTestCase
 
     user = create_user
     user.confirm
-    post :create, params: { format: 'json', user: {
-        email: user.email,
-        password: user.password
-      }
+    post :create, format: 'json', user: {
+      email: user.email,
+      password: user.password
     }
 
     assert_equal 'foo.bar', request.session["user_return_to"]
@@ -78,10 +76,9 @@ class SessionsControllerTest < Devise::ControllerTestCase
     request.env["devise.mapping"] = Devise.mappings[:user]
     user = create_user
     user.confirm
-    post :create, params: { format: 'json', user: {
-        email: user.email,
-        password: user.password
-      }
+    post :create, format: 'json', user: {
+      email: user.email,
+      password: user.password
     }
     delete :destroy, format: 'json'
     assert flash[:notice].blank?, "flash[:notice] should be blank, not #{flash[:notice].inspect}"

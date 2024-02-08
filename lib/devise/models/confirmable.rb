@@ -348,11 +348,9 @@ module Devise
             confirmable = find_or_initialize_with_error_by(:confirmation_token, confirmation_digest)
           end
 
-          # TODO: replace above lines with
-          # confirmable = find_or_initialize_with_error_by(:confirmation_token, confirmation_token)
-          # after enough time has passed that Devise clients do not use digested tokens
-
+          confirmable = find_or_initialize_with_error_by(:confirmation_token, confirmation_token)
           confirmable.confirm if confirmable.persisted?
+          confirmable.confirmation_token = original_token
           confirmable
         end
 
