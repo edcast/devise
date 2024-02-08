@@ -198,7 +198,7 @@ class LockableTest < ActiveSupport::TestCase
 
   test 'should find and unlock a user automatically based on raw token' do
     user = create_user
-    raw  = user.send_unlock_instructions
+    raw  = user.send_unlock_instructions(host: "localhost")
     locked_user = User.unlock_access_by_token(raw)
     assert_equal user, locked_user
     assert_not user.reload.access_locked?
@@ -219,40 +219,67 @@ class LockableTest < ActiveSupport::TestCase
   test 'should find a user to send unlock instructions' do
     user = create_user
     user.lock_access!
+<<<<<<< HEAD
     unlock_user = User.send_unlock_instructions(email: user.email)
     assert_equal user, unlock_user
   end
 
   test 'should return a new user if no email was found' do
     unlock_user = User.send_unlock_instructions(email: "invalid@example.com")
+=======
+    unlock_user = User.send_unlock_instructions({email: user.email}, {host: "localhost"})
+    assert_equal unlock_user, user
+  end
+
+  test 'should return a new user if no email was found' do
+    unlock_user = User.send_unlock_instructions({email: "invalid@example.com"},
+                                                {host: "localhost"})
+>>>>>>> 73058927 (rebase conflict resolved)
     assert_not unlock_user.persisted?
   end
 
   test 'should add error to new user email if no email was found' do
-    unlock_user = User.send_unlock_instructions(email: "invalid@example.com")
+    unlock_user = User.send_unlock_instructions({email: "invalid@example.com"},
+                                                {host: "localhost"})
     assert_equal 'not found', unlock_user.errors[:email].join
   end
 
   test 'should find a user to send unlock instructions by authentication_keys' do
     swap Devise, authentication_keys: [:username, :email] do
       user = create_user
+<<<<<<< HEAD
       unlock_user = User.send_unlock_instructions(email: user.email, username: user.username)
       assert_equal user, unlock_user
+=======
+      unlock_user = User.send_unlock_instructions({email: user.email, username: user.username},
+                                                  {host: "localhost"})
+      assert_equal unlock_user, user
+>>>>>>> 73058927 (rebase conflict resolved)
     end
   end
 
   test 'should require all unlock_keys' do
     swap Devise, unlock_keys: [:username, :email] do
       user = create_user
+<<<<<<< HEAD
       unlock_user = User.send_unlock_instructions(email: user.email)
       assert_not unlock_user.persisted?
       assert unlock_user.errors.added?(:username, :blank)
+=======
+      unlock_user = User.send_unlock_instructions({email: user.email}, {host: "localhost"})
+      assert_not unlock_user.persisted?
+      assert_equal "can't be blank", unlock_user.errors[:username].join
+>>>>>>> 73058927 (rebase conflict resolved)
     end
   end
 
   test 'should not be able to send instructions if the user is not locked' do
     user = create_user
+<<<<<<< HEAD
     assert_not user.resend_unlock_instructions
+=======
+    assert_not user.resend_unlock_instructions(host: "localhost")
+>>>>>>> 73058927 (rebase conflict resolved)
     assert_not user.access_locked?
     assert_equal 'was not locked', user.errors[:email].join
   end
@@ -260,7 +287,11 @@ class LockableTest < ActiveSupport::TestCase
   test 'should not be able to send instructions if the user if not locked and have username as unlock key' do
     swap Devise, unlock_keys: [:username] do
       user = create_user
+<<<<<<< HEAD
       assert_not user.resend_unlock_instructions
+=======
+      assert_not user.resend_unlock_instructions(host: "localhost")
+>>>>>>> 73058927 (rebase conflict resolved)
       assert_not user.access_locked?
       assert_equal 'was not locked', user.errors[:username].join
     end

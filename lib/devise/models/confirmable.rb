@@ -56,6 +56,8 @@ module Devise
           after_update :send_reconfirmation_instructions, if: :reconfirmation_required?
         end
         before_update :postpone_email_change_until_confirmation_and_regenerate_confirmation_token, if: :postpone_email_change?
+        after_update  :send_reconfirmation_instructions,  if: :reconfirmation_required?
+        attr_accessor :email_host
       end
 
       def initialize(*args, &block)
@@ -117,7 +119,8 @@ module Devise
           generate_confirmation_token!
         end
 
-        opts.merge(pending_reconfirmation? ? { to: unconfirmed_email } : { })
+        opts.merge!(pending_reconfirmation? ? { to: unconfirmed_email } : { })
+        opts.merge!(:host => self.email_host)
         send_devise_notification(:confirmation_instructions, @raw_confirmation_token, opts)
       end
 
@@ -318,7 +321,7 @@ module Devise
           unless confirmable.try(:persisted?)
             confirmable = find_or_initialize_with_errors(confirmation_keys, attributes, :not_found)
           end
-          confirmable.resend_confirmation_instructions if confirmable.persisted?
+          confirmable.resend_confirmation_instructions(attributes) if confirmable.persisted?
           confirmable
         end
 

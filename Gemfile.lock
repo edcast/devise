@@ -10,11 +10,7 @@ GIT
 PATH
   remote: .
   specs:
-<<<<<<< HEAD
     devise (4.9.3)
-=======
-    devise (4.0.3)
->>>>>>> bd2bc712 (rebase conflict resolved)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 6.0.0)
