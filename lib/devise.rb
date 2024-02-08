@@ -265,12 +265,8 @@ module Devise
   mattr_accessor :clean_up_csrf_token_on_authentication
   @@clean_up_csrf_token_on_authentication = true
 
-  # When false, Devise will not attempt to reload routes on eager load.
-  # This can reduce the time taken to boot the app but if your application
-  # requires the Devise mappings to be loaded during boot time the application
-  # won't boot properly.
-  mattr_accessor :reload_routes
-  @@reload_routes = true
+  mattr_accessor :email_host
+  @@email_host = :request
 
   # PRIVATE CONFIGURATION
 
@@ -304,9 +300,6 @@ module Devise
   mattr_accessor :token_generator
   @@token_generator = nil
 
-  # When set to false, changing a password does not automatically sign in a user
-  mattr_accessor :sign_in_after_change_password
-  @@sign_in_after_change_password = true
 
   # Default way to set up Devise. Run rails generate devise_install to create
   # a fresh initializer with all configuration values.
