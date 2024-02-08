@@ -17,7 +17,7 @@ class ActionDispatch::IntegrationTest
         created_at: Time.now.utc
       )
       user.update_attribute(:confirmation_sent_at, options[:confirmation_sent_at]) if options[:confirmation_sent_at]
-      user.confirm unless options[:confirm] == false
+      user.confirm! unless options[:confirm] == false
       user.lock_access! if options[:locked] == true
       User.validations_performed = false
       user
