@@ -327,6 +327,12 @@ configured (by @joshpencheon)
   * Fix strategy checking in `Lockable#unlock_strategy_enabled?` for `:none`
     and `:undefined` strategies. (by @f3ndot)
 
+### 4.0.2 - 2016-04-25
+
+* bug fixes
+  * Fix strategy checking in `Lockable#unlock_strategy_enabled?` for `:none`
+  and `:undefined` strategies. (by @f3ndot)
+
 ### 4.0.1 - 2016-04-25
 
 * bug fixes
