@@ -172,7 +172,7 @@ class LockableTest < ActiveSupport::TestCase
 
   test 'should find and unlock a user automatically based on raw token' do
     user = create_user
-    raw  = user.send_unlock_instructions
+    raw  = user.send_unlock_instructions(host: "localhost")
     locked_user = User.unlock_access_by_token(raw)
     assert_equal locked_user, user
     refute user.reload.access_locked?
@@ -193,7 +193,7 @@ class LockableTest < ActiveSupport::TestCase
   test 'should find a user to send unlock instructions' do
     user = create_user
     user.lock_access!
-    unlock_user = User.send_unlock_instructions(email: user.email)
+    unlock_user = User.send_unlock_instructions({email: user.email}, {host: "localhost"})
     assert_equal unlock_user, user
   end
 
@@ -203,14 +203,16 @@ class LockableTest < ActiveSupport::TestCase
   end
 
   test 'should add error to new user email if no email was found' do
-    unlock_user = User.send_unlock_instructions(email: "invalid@example.com")
+    unlock_user = User.send_unlock_instructions({email: "invalid@example.com"},
+                                                {host: "localhost"})
     assert_equal 'not found', unlock_user.errors[:email].join
   end
 
   test 'should find a user to send unlock instructions by authentication_keys' do
     swap Devise, authentication_keys: [:username, :email] do
       user = create_user
-      unlock_user = User.send_unlock_instructions(email: user.email, username: user.username)
+      unlock_user = User.send_unlock_instructions({email: user.email, username: user.username},
+                                                  {host: "localhost"})
       assert_equal unlock_user, user
     end
   end
