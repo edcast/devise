@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  mount RailsEngine::Engine => '/rails_engine', as: 'rails_engine'
+
   # Resources for testing
   resources :users, only: [:index] do
     member do
